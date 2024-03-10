@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Coin paprika</string>
+    
+    <string name="coinItem_nameSymbol">%1$s (%2$s)</string>
 </resources>

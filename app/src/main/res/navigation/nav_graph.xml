@@ -22,6 +22,6 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="coinId"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
 </navigation>

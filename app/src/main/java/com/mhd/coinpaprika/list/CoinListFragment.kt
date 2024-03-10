@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.mhd.coinpaprika.R
 import com.mhd.coinpaprika.data.model.response.CoinsResponse
 import com.mhd.coinpaprika.databinding.FragmentListBinding
@@ -51,7 +52,8 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
     private fun setUpRecyclerView(coins: List<CoinsResponse>) {
         binding.progressCircular.isVisible = false
         val adapter = CoinAdapter(coins) {
-
+            val action = CoinListFragmentDirections.actionCoinListFragmentToCoinDetailFragment(it)
+            findNavController().navigate(action)
         }
 
         binding.rvCoins.adapter = adapter

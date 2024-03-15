@@ -22,9 +22,13 @@ class CoinListViewModel : ViewModel() {
     fun fetchCoins() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val apiService = ApiService.create()
-                val coins = apiService.getCoins()
-                _uiState.value = CoinListUiState.Success(coins)
+                try {
+                    val apiService = ApiService.create()
+                    val coins = apiService.getCoins()
+                    _uiState.value = CoinListUiState.Success(coins)
+                } catch (e: Exception){
+                    _uiState.value = CoinListUiState.Error
+                }
             }
         }
     }
@@ -34,4 +38,5 @@ class CoinListViewModel : ViewModel() {
 sealed interface CoinListUiState {
     data object Loading : CoinListUiState
     data class Success(val coins: List<CoinsResponse>) : CoinListUiState
+    data object Error : CoinListUiState
 }

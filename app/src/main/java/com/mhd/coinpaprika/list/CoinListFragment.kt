@@ -42,6 +42,10 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
                     when (it) {
                         CoinListUiState.Loading -> binding.progressCircular.isVisible = true
                         is CoinListUiState.Success -> setUpRecyclerView(coins = it.coins)
+                        CoinListUiState.Error -> {
+                            binding.progressCircular.isVisible = false
+                            binding.ivConnectionError.isVisible = true
+                        }
                     }
 
                 }

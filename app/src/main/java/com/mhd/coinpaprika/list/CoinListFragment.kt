@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.mhd.coinpaprika.R
-import com.mhd.coinpaprika.data.model.response.CoinsResponse
+import com.mhd.coinpaprika.data.network.response.CoinsResponse
 import com.mhd.coinpaprika.databinding.FragmentListBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
     private val binding: FragmentListBinding
         get() = _binding!!
 
-    private val viewModel: CoinListViewModel by viewModels()
+    private val viewModel: CoinListViewModel by viewModels(factoryProducer = { CoinListViewModel.factory })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

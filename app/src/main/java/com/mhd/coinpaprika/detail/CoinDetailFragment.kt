@@ -20,7 +20,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_detail) {
     private val binding: FragmentDetailBinding
         get() = _binding!!
 
-    private val viewModel: CoinDetailViewModel by viewModels()
+    private val viewModel: CoinDetailViewModel by viewModels(factoryProducer = { CoinDetailViewModel.factory  })
     private val args: CoinDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

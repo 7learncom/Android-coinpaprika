@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mhd.coinpaprika.R
-import com.mhd.coinpaprika.data.model.response.CoinsResponse
+import com.mhd.coinpaprika.data.network.response.CoinsResponse
 import com.mhd.coinpaprika.databinding.ItemCoinBinding
 
 class CoinAdapter(

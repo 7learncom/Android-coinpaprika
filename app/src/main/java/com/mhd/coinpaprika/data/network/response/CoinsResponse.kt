@@ -1,4 +1,4 @@
-package com.mhd.coinpaprika.data.model.response
+package com.mhd.coinpaprika.data.network.response
 
 
 import com.google.gson.annotations.SerializedName

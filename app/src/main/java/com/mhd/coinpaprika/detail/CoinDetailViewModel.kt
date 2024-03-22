@@ -3,6 +3,7 @@ package com.mhd.coinpaprika.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mhd.coinpaprika.data.ApiService
+import com.mhd.coinpaprika.data.ApiServiceProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -13,7 +14,7 @@ class CoinDetailViewModel : ViewModel() {
     val uiState = _uiState.asStateFlow()
     fun fetchCoinData(coinId: String) {
         viewModelScope.launch {
-            val apiService = ApiService.create()
+            val apiService = ApiServiceProvider.apiService
             val response = apiService.getCoinById(coinId)
             val state = CoinDetailUiState.CoinData(
                 name = response.name,

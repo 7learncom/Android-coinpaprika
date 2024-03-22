@@ -3,6 +3,7 @@ package com.mhd.coinpaprika.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mhd.coinpaprika.data.ApiService
+import com.mhd.coinpaprika.data.ApiServiceProvider
 import com.mhd.coinpaprika.data.model.response.CoinsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +24,7 @@ class CoinListViewModel : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val apiService = ApiService.create()
+                    val apiService = ApiServiceProvider.apiService
                     val coins = apiService.getCoins()
                     _uiState.value = CoinListUiState.Success(coins)
                 } catch (e: Exception){

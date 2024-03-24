@@ -40,7 +40,11 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
                 viewModel.uiState.collect {
 
                     when (it) {
-                        CoinListUiState.Loading -> binding.progressCircular.isVisible = true
+                        CoinListUiState.Loading -> {
+                            binding.progressCircular.isVisible = true
+                            binding.ivConnectionError.isVisible = false
+                        }
+
                         is CoinListUiState.Success -> setUpRecyclerView(coins = it.coins)
                         CoinListUiState.Error -> {
                             binding.progressCircular.isVisible = false
@@ -55,6 +59,7 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
 
     private fun setUpRecyclerView(coins: List<CoinsResponse>) {
         binding.progressCircular.isVisible = false
+        binding.ivConnectionError.isVisible = false
         val adapter = CoinAdapter(coins) {
             val action = CoinListFragmentDirections.actionCoinListFragmentToCoinDetailFragment(it)
             findNavController().navigate(action)

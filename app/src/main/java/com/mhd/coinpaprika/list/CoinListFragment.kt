@@ -27,6 +27,10 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentListBinding.bind(view)
         observeUiState()
+
+        binding.btnRetry.setOnClickListener {
+            viewModel.onRetryClick()
+        }
     }
 
     override fun onDestroyView() {
@@ -38,18 +42,11 @@ class CoinListFragment : Fragment(R.layout.fragment_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
+                    binding.groupError.isVisible = it is CoinListUiState.Error
+                    binding.progressCircular.isVisible = it is CoinListUiState.Loading
 
-                    when (it) {
-                        CoinListUiState.Loading -> {
-                            binding.progressCircular.isVisible = true
-                            binding.ivConnectionError.isVisible = false
-                        }
-
-                        is CoinListUiState.Success -> setUpRecyclerView(coins = it.coins)
-                        CoinListUiState.Error -> {
-                            binding.progressCircular.isVisible = false
-                            binding.ivConnectionError.isVisible = true
-                        }
+                    if (it is CoinListUiState.Success) {
+                        setUpRecyclerView(coins = it.coins)
                     }
 
                 }

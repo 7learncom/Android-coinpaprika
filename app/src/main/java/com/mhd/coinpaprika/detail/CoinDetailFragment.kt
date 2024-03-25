@@ -20,7 +20,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_detail) {
     private val binding: FragmentDetailBinding
         get() = _binding!!
 
-    private val viewModel: CoinDetailViewModel by viewModels(factoryProducer = { CoinDetailViewModel.factory  })
+    private val viewModel: CoinDetailViewModel by viewModels(factoryProducer = { CoinDetailViewModel.factory })
     private val args: CoinDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +44,15 @@ class CoinDetailFragment : Fragment(R.layout.fragment_detail) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     binding.progressCircular.isVisible = it is CoinDetailUiState.Loading
+                    binding.ivConnectionError.isVisible =
+                        it is CoinDetailUiState.NetworkError || it is CoinDetailUiState.NotFoundError
+
+                    if (it is CoinDetailUiState.NotFoundError) {
+                        binding.tvError.isVisible = true
+                        binding.tvError.text = it.message
+                    } else {
+                        binding.tvError.isVisible = false
+                    }
 
                     if (it is CoinDetailUiState.CoinData) {
                         showCoinDetail(
@@ -54,6 +63,7 @@ class CoinDetailFragment : Fragment(R.layout.fragment_detail) {
                             isActive = it.isActive,
                             teamMembers = it.teamMembers
                         )
+
                     }
                 }
             }

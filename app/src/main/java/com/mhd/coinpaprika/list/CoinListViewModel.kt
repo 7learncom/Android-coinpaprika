@@ -18,10 +18,11 @@ class CoinListViewModel(
     private val repository: CoinRepository
 ) : ViewModel() {
 
-    companion object{
+    companion object {
         val factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val application = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as App
+                val application =
+                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as App
                 val container = application.appContainer
                 val repository = container.coinRepository
                 CoinListViewModel(repository)
@@ -36,13 +37,18 @@ class CoinListViewModel(
         fetchCoins()
     }
 
-    fun fetchCoins() {
+    fun onRetryClick() {
+        _uiState.value = CoinListUiState.Loading
+        fetchCoins()
+    }
+
+    private fun fetchCoins() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
                     val coins = repository.getCoins()
                     _uiState.value = CoinListUiState.Success(coins)
-                } catch (e: Exception){
+                } catch (e: Exception) {
                     _uiState.value = CoinListUiState.Error
                 }
             }

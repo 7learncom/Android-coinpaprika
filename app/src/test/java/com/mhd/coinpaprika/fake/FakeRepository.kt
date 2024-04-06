@@ -10,6 +10,6 @@ class FakeRepository : CoinRepository {
     }
 
     override suspend fun getCoinDetail(id: String): CoinDetailResponse {
-        TODO("Not yet implemented")
+        return FakeDataSource.coinDetail
     }
 }
